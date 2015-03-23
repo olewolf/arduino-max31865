@@ -1,0 +1,3 @@
+The files in this folder provide an Arduino driver for the MAX31865 RTD chip
+and example code that illustrates how to use it.  Move the folder contents
+to your Arduino/libraries folder.

@@ -1,0 +1,37 @@
+#######################################
+# Syntax Coloring Map For MAX31865 Library
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+MAX31865_RTD	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+configure	KEYWORD2
+read_all	KEYWORD2
+temperature	KEYWORD2
+status	KEYWORD2
+low_threshold	KEYWORD2
+high_threshold	KEYWORD2
+raw_resistance	KEYWORD2
+resistance	KEYWORD2
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+MAX31865_FAULT_LOW_THRESHOLD	LITERAL1
+MAX31865_FAULT_HIGH_THRESHOLD	LITERAL1
+MAX31865_FAULT_REFIN	LITERAL1
+MAX31865_FAULT_REFIN_FORCE	LITERAL1
+MAX31865_FAULT_RTDIN_FORCE	LITERAL1
+MAX31865_FAULT_VOLTAGE	LITERAL1
+MAX31865_FAULT_DETECTION_NONE	LITERAL1
+MAX31865_FAULT_DETECTION_AUTO	LITERAL1
+MAX31865_FAULT_DETECTION_MANUAL_1	LITERAL1
+MAX31865_FAULT_DETECTION_MANUAL_2	LITERAL1
