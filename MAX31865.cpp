@@ -40,8 +40,11 @@
  *
  * @param [in] cs_pin Arduino pin selected for the CS signal.
  */
-MAX31865_RTD::MAX31865_RTD( uint8_t cs_pin )
+MAX31865_RTD::MAX31865_RTD( ptd_type type, uint8_t cs_pin )
 {
+  /* Set the type of PTD. */
+  this->type = type;
+
   /* CS pin for the SPI device. */
   this->cs_pin = cs_pin;
   pinMode( this->cs_pin, OUTPUT );
@@ -146,7 +149,10 @@ double MAX31865_RTD::temperature( ) const
   static const double a2   = 2.0 * RTD_B;
   static const double b_sq = RTD_A * RTD_A;
 
-  double c = 1.0 - resistance( ) / (double)RTD_RESISTANCE;
+  const double rtd_resistance =
+    ( this->type == RTD_PT100 ) ? RTD_RESISTANCE_PT100 : RTD_RESISTANCE_PT1000;
+
+  double c = 1.0 - resistance( ) / rtd_resistance;
   double D = b_sq - 2.0 * a2 * c;
   double temperature_deg_C = ( -RTD_A + sqrt( D ) ) / a2;
 

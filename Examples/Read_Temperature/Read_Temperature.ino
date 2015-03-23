@@ -39,7 +39,7 @@
 #define RTD_CS_PIN   10
 
 
-MAX31865_RTD rtd( RTD_CS_PIN );
+MAX31865_RTD rtd( MAX31865_RTD::RTD_PT100, RTD_CS_PIN );
 
 
 void setup()
@@ -61,10 +61,10 @@ void setup()
        1-shot disabled
        3-wire enabled
        Fault detection:  automatic delay
-	   Fault status:  auto-clear
+       Fault status:  auto-clear
        50 Hz filter
-	   Low threshold:  0x0000
-	   High threshold:  0x7fff
+       Low threshold:  0x0000
+       High threshold:  0x7fff
   */
   rtd.configure( true, true, false, true, MAX31865_FAULT_DETECTION_AUTO,
                  true, true, 0x0000, 0x7fff );

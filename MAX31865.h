@@ -67,16 +67,19 @@
 #define SELECT_RTD(x) SELECT_RTD_HELPER(x)
 #define RTD_A         SELECT_RTD(RTD_A_ITS90)
 #define RTD_B         SELECT_RTD(RTD_B_ITS90)
-/**
+/*
  * The reference resistor on the hardware; see the MAX31865 datasheet
- * for details.
+ * for details.  The values 400 and 4000 Ohm are recommended values for
+ * the PT100 and PT1000.
  */
-#define RTD_RREF         400 /* Ohm */
-/**
+#define RTD_RREF_PT100         400 /* Ohm */
+#define RTD_RREF_PT1000       4000 /* Ohm */
+/*
  * The RTD resistance at 0 degrees Celcius.  For the PT100, this is 100 Ohm;
  * for the PT1000, it is 1000 Ohm.
  */
-#define RTD_RESISTANCE   100 /* Ohm */
+#define RTD_RESISTANCE_PT100   100 /* Ohm */
+#define RTD_RESISTANCE_PT1000 1000 /* Ohm */
 
 #define RTD_ADC_RESOLUTION  ( 1u << 15 ) /* 15 bits */
 
@@ -85,7 +88,9 @@
 class MAX31865_RTD
 {
 public:
-  MAX31865_RTD( uint8_t cs_pin );
+  enum ptd_type { RTD_PT100, RTD_PT1000 };
+
+  MAX31865_RTD( ptd_type type, uint8_t cs_pin );
   void configure( bool v_bias, bool conversion_mode, bool one_shot, bool three_wire,
                   uint8_t fault_cycle, bool fault_clear, bool filter_50hz,
                   uint16_t low_threshold, uint16_t high_threshold );
@@ -97,12 +102,15 @@ public:
   uint16_t raw_resistance( ) const { return( measured_resistance ); }
   double resistance( ) const
   {
-    return( (double)raw_resistance( ) * (double)RTD_RREF / (double)RTD_ADC_RESOLUTION );
+    const double rtd_rref =
+      ( this->type == RTD_PT100 ) ? (double)RTD_RREF_PT100 : (double)RTD_RREF_PT1000;
+    return( (double)raw_resistance( ) * rtd_rref / (double)RTD_ADC_RESOLUTION );
   }
 
 private:
   /* Our configuration. */
   uint8_t  cs_pin;
+  ptd_type type;
   uint8_t  configuration_control_bits;
   uint16_t configuration_low_threshold;
   uint16_t configuration_high_threshold;
