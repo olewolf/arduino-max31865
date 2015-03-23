@@ -66,7 +66,7 @@ void setup()
        Low threshold:  0x0000
        High threshold:  0x7fff
   */
-  rtd.configure( true, true, false, true, MAX31865_FAULT_DETECTION_AUTO,
+  rtd.configure( true, true, false, true, MAX31865_FAULT_DETECTION_NONE,
                  true, true, 0x0000, 0x7fff );
 }
 
@@ -94,7 +94,7 @@ void loop()
     }
     else if( rtd.status( ) & MAX31865_FAULT_LOW_THRESHOLD )
     {
-      Serial.println( "RTD low threshold exceed3ed" );
+      Serial.println( "RTD low threshold exceeded" );
     }
     else if( rtd.status( ) & MAX31865_FAULT_REFIN )
     {
