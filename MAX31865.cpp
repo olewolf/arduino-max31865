@@ -75,7 +75,8 @@ void MAX31865_RTD::configure( bool v_bias, bool conversion_mode, bool one_shot,
                               uint16_t high_threshold )
 {
   uint8_t control_bits = 0;
-  
+
+  /* Assemble the control bit mask. */
   control_bits |= ( v_bias ? 0x80 : 0 );
   control_bits |= ( conversion_mode ? 0x40 : 0 );
   control_bits |= ( one_shot ? 0x20 : 0 );
@@ -84,10 +85,13 @@ void MAX31865_RTD::configure( bool v_bias, bool conversion_mode, bool one_shot,
   control_bits |= ( fault_clear ? 0x02 : 0 );
   control_bits |= ( filter_50hz ? 0x01 : 0 );
 
+  /* Store the control bits and the fault threshold limits for reconfiguration
+     purposes. */
   this->configuration_control_bits   = control_bits;
   this->configuration_low_threshold  = low_threshold;
   this->configuration_high_threshold = high_threshold;
 
+  /* Perform an initial "reconfiguration." */
   reconfigure( );
 }
 
